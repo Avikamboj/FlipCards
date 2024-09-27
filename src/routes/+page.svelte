@@ -1,0 +1,19 @@
+<script lang="ts">
+    import { play } from "./store";
+    import SetLayout from "./setLayout.svelte";
+    import Game from "./game.svelte";
+    import { onDestroy } from "svelte";
+
+    let playGame: Boolean;
+    let unsubscribe = play.subscribe((val) => {
+        playGame = val;
+    });
+
+    onDestroy(unsubscribe);
+</script>
+
+{#if playGame}
+    <Game />
+{:else}
+    <SetLayout />
+{/if}
