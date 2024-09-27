@@ -160,14 +160,6 @@
         padding: 5px;
     }
 
-    .container > .card:nth-child(even) > div:first-child {
-        background-image: url(../../static/CardFront.jpg);
-    }
-
-    .container > .card:nth-child(odd) > div:first-child {
-        background-image: url(../../static/CardFront2.jpg);
-    }
-
     .card {
         height: 80px;
         width: 70px;
@@ -196,7 +188,7 @@
     }
 
     .card-front {
-        background-color: #f0f0f0;
+        overflow: hidden;
     }
 
     .card-back {
@@ -209,6 +201,7 @@
 
     .card-front img {
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        aspect-ratio: 3/2;
     }
 </style>

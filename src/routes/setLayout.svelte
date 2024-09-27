@@ -20,60 +20,63 @@
         </div>
 
         <div class="modes">
-            <h1>Select Hardness</h1>
-            <button
-                id="easy"
-                on:click={() => {
-                    level.update((val) => (val = 1));
-                    r = 4;
-                    rows.update((val) => {
-                        val = r;
-                        return val;
-                    });
-                    c = 4;
-                    cols.update((val) => {
-                        val = c;
-                        return val;
-                    });
-                }}>Easy</button
-            >
+            <div><h1>Select Hardness</h1></div>
+            <div class="btns">
+                <button
+                    id="easy"
+                    on:click={() => {
+                        level.update((val) => (val = 1));
+                        r = 4;
+                        rows.update((val) => {
+                            val = r;
+                            return val;
+                        });
+                        c = 4;
+                        cols.update((val) => {
+                            val = c;
+                            return val;
+                        });
+                    }}>Easy</button
+                >
 
-            <button
-                id="medium"
-                on:click={() => {
-                    level.update((val) => (val = 2));
-                    r = 6;
-                    rows.update((val) => {
-                        val = r;
-                        return val;
-                    });
-                    c = 6;
-                    cols.update((val) => {
-                        val = c;
-                        return val;
-                    });
-                }}>Medium</button
-            >
+                <button
+                    id="medium"
+                    on:click={() => {
+                        level.update((val) => (val = 2));
+                        r = 6;
+                        rows.update((val) => {
+                            val = r;
+                            return val;
+                        });
+                        c = 6;
+                        cols.update((val) => {
+                            val = c;
+                            return val;
+                        });
+                    }}>Medium</button
+                >
 
-            <button
-                id="hard"
-                on:click={() => {
-                    level.update((val) => (val = 3));
-                    r = 8;
-                    rows.update((val) => {
-                        val = r;
-                        return val;
-                    });
-                    c = 8;
-                    cols.update((val) => {
-                        val = c;
-                        return val;
-                    });
-                }}>Hard</button
-            >
+                <button
+                    id="hard"
+                    on:click={() => {
+                        level.update((val) => (val = 3));
+                        r = 8;
+                        rows.update((val) => {
+                            val = r;
+                            return val;
+                        });
+                        c = 8;
+                        cols.update((val) => {
+                            val = c;
+                            return val;
+                        });
+                    }}>Hard</button
+                >
+            </div>
 
             <p style="text-align: center; margin: 10px 0">
-                <strong>Level: </strong> {#if $level === 1}
+                <strong>Level: </strong>
+                {#if $level === 1}
                     Easy
                 {:else if $level === 2}
                     Medium
@@ -113,6 +116,13 @@
         text-align: center;
         border-bottom: 1px solid black;
         margin: 5px 0;
+    }
+
+    .modes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     #easy,
