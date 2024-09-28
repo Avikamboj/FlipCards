@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { rows, cols, level, play } from "./store";
+    import { onDestroy, onMount } from "svelte";
+    import { rows, cols, level, play, countDown } from "./store";
     import Front from "./CardFront.jpg";
     import Front2 from "./CardFront2.jpg";
 
     let values: number[] = [];
+
     let cards: any = {};
 
     let rep = 1;
@@ -16,7 +17,7 @@
         rep = 1;
     }
 
-    for (let i = 0; i <= $rows * $cols; i++) {
+    for (let i = 0; i < $rows * $cols; i++) {
         cards[i] = { isFlipped: false, isMatched: false, value: 0 };
     }
 
@@ -43,6 +44,64 @@
         }, 800);
     });
 
+    let timeRun = false;
+
+    let unsubscribe = countDown.subscribe((val) => {
+        timeRun = val.isRunning;
+    });
+
+    if (timeRun) {
+        setTimeout(() => {
+            incrementTime();
+        }, 1500);
+    }
+
+    function stopTimer() {
+        timeRun = false;
+        countDown.update((timer) => {
+            timer.isRunning = false;
+            return timer;
+        });
+    }
+
+    function resetTimer() {
+        countDown.update((timer) => {
+            timer.isRunning = false;
+            timer.miliSecond = 0;
+            timer.second = 0;
+            timer.minute = 0;
+            timer.hour = 0;
+            return timer;
+        });
+    }
+
+    function incrementTime() {
+        if (!timeRun) return;
+
+        countDown.update((timer) => {
+            timer.miliSecond++;
+
+            if (timer.miliSecond >= 100) {
+                timer.miliSecond = 0;
+                timer.second++;
+            }
+
+            if (timer.second >= 60) {
+                timer.second = 0;
+                timer.minute++;
+            }
+
+            if (timer.minute >= 60) {
+                timer.minute = 0;
+                timer.hour++;
+            }
+
+            return timer;
+        });
+
+        setTimeout(incrementTime, 8);
+    }
+
     let matches: number[] = [];
     let flip = 0;
     function flipCard(index: number) {
@@ -64,7 +123,7 @@
         let firstVal = cards[firstInd].value;
         let secondVal = cards[secondInd].value;
 
-        if (firstVal === secondVal) {
+        if (firstVal === secondVal && firstInd !== secondInd) {
             let cardBtn = document.getElementsByClassName("card");
             const firstCard = cardBtn[firstInd] as HTMLElement;
             const secondCard = cardBtn[secondInd] as HTMLElement;
@@ -99,13 +158,29 @@
                 secondCard.classList.remove("flipped");
             }, 800);
         }
-
         matches = [];
         flip = 0;
+
+        let allMatched = Object.values(cards).every((card) => card.isMatched);
+        // Object.values(cards).forEach((card) => {
+        //     if (!card.isMatched) {
+        //         allMatched = false;
+        //     }
+        // });
+
+        if (allMatched) {
+            stopTimer();
+        }
     };
+    onDestroy(unsubscribe);
 </script>
 
 <div class="main">
+    <div class="time">
+        <p>
+            {$countDown.hour}:{$countDown.minute}:{$countDown.second}:{$countDown.miliSecond}
+        </p>
+    </div>
     <div
         class="container"
         style="grid-template-columns: {$level === 1
@@ -136,7 +211,12 @@
         {/each}
     </div>
     <div class="btn">
-        <button on:click={() => {play.update((val) => val = false)}}>Restart</button>
+        <button
+            on:click={() => {
+                resetTimer();
+                play.update((val) => (val = false));
+            }}>Restart</button
+        >
     </div>
 </div>
 
@@ -162,6 +242,8 @@
     }
 
     .card {
+        user-select: none;
+        cursor: pointer;
         height: 80px;
         width: 70px;
         display: flex;
@@ -204,5 +286,10 @@
         height: 100%;
         object-fit: contain;
         aspect-ratio: 3/2;
+    }
+
+    .btn {
+        user-select: none;
+        cursor: pointer;
     }
 </style>
