@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { rows, cols, level, play } from "./store";
+    import { rows, cols, level, play, countDown } from "./store";
 
     let r: number;
     let c: number;
@@ -9,18 +9,23 @@
             val = true;
             return val;
         });
+
+        countDown.update((timer) => {
+            timer.isRunning = true;
+            return timer;
+        });
     }
 </script>
 
 <main>
     <div class="container">
         <div class="header">
-            <p>!Flip The Cards!</p>
-            <p>Game</p>
+            <h1>!Flip The Cards!</h1>
+            <h2>Game</h2>
         </div>
 
         <div class="modes">
-            <div><h1>Select Hardness</h1></div>
+            <div><h3>Select Hardness</h3></div>
             <div class="btns">
                 <button
                     id="easy"
@@ -36,7 +41,9 @@
                             val = c;
                             return val;
                         });
-                    }}>Easy</button
+                    }}
+                    style="transform: {$level===1?'scale(1.2)':''}"
+                    >Easy</button
                 >
 
                 <button
@@ -53,7 +60,9 @@
                             val = c;
                             return val;
                         });
-                    }}>Medium</button
+                    }}
+                    style="transform: {$level===2?'scale(1.2)':''}"
+                    >Medium</button
                 >
 
                 <button
@@ -70,8 +79,10 @@
                             val = c;
                             return val;
                         });
-                    }}>Hard</button
-                >
+                    }}
+                    style="transform: {$level===3?'scale(1.2)':''}"
+                    >Hard
+                </button>
             </div>
 
             <p style="text-align: center; margin: 10px 0">
@@ -112,7 +123,12 @@
         gap: 10px;
     }
 
-    .container h1 {
+    .container div:first-child{
+        width: 100%;
+    }
+
+    .container h3 {
+        width: 100%;
         text-align: center;
         border-bottom: 1px solid black;
         margin: 5px 0;
@@ -132,16 +148,26 @@
         padding: 5px;
         border: none;
         border-radius: 8px;
+        transition-duration: .2s;
     }
 
     #easy {
         background-color: rgb(65, 65, 255);
+        &:hover {
+            background-color: rgb(30, 30, 249);
+        }
     }
     #medium {
-        background-color: green;
+        background-color: rgb(3, 149, 3);
+        &:hover {
+            background-color: rgb(1, 110, 1);
+        }
     }
     #hard {
-        background-color: red;
+        background-color: rgb(250, 4, 4);
+        &:hover {
+            background-color: rgb(147, 3, 3);
+        }
     }
 
     #playBtn {
