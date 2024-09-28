@@ -1,4 +1,4 @@
-To Run this Game First you have to install svelte (javascript framework in your system), Then open the project folder in any editor, run command:- 
+To Run this Game First you have to install svelte (javascript framework) in your system, Then open the project folder in any editor, run command:- 
 $ npm run dev
 
 Or if you want to run production version then run commands:- 
