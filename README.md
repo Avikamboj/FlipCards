@@ -7,11 +7,11 @@ $ npm run build
 $ npm run preview
 
 Images of Game UI <br>
-![Image 1](Screenshot%202024-10-05%20133554.png)
-![Image 2](Screenshot%202024-10-05%20133954.png)
-![Image 3](Screenshot%202024-10-05%20134008.png)
-![Image 4](Screenshot%202024-10-05%20134144.png)
-![Image 5](Screenshot%202024-10-05%20134158.png)
+<img src="Screenshot%202024-10-05%20133554.png" alt="Image 1" height="300" width="300" />
+<img src="Screenshot%202024-10-05%20133954.png" alt="Easy Mode" height="300" width="300"/>
+<img src="Screenshot%202024-10-05%20134008.png" alt="Match Cards" height="300" width="300"/>
+<img src="Screenshot%202024-10-05%20134144.png" alt="Medium Mode" height="300" width="300"/>
+<img src="Screenshot%202024-10-05%20134158.png" alt="hard Mode" height="300" width="300"/>
 
 # create-svelte
 
