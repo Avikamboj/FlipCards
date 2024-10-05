@@ -285,7 +285,6 @@
     .card-front img {
         height: 100%;
         object-fit: contain;
-        aspect-ratio: 3/2;
     }
 
     .btn {
