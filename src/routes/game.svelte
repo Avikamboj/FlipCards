@@ -3,7 +3,6 @@
     import { rows, cols, level, play, countDown } from "./store";
     import Front from "./CardFront.jpg";
     import Front2 from "./CardFront2.jpg";
-    import Page from "./+page.svelte";
 
     let values: number[] = [];
     let cards: any = {};
@@ -35,6 +34,7 @@
         v++;
     }
 
+    let gameComplete: boolean = false;
     onMount(() => {
         setTimeout(() => {
             for (let i = 0; i < Object.keys(cards).length; i++) {
@@ -77,11 +77,13 @@
             timer.isRunning = true;
             return timer;
         });
-        incrementTime();
+        runTimeGap = setInterval(incrementTime, 1000);
     }
 
     function stopTimer() {
         timeRun = false;
+
+        clearInterval(runTimeGap);
         countDown.update((timer) => {
             timer.isRunning = false;
             return timer;
@@ -91,60 +93,50 @@
     function resetTimer() {
         countDown.update((timer) => {
             timer.isRunning = false;
-            timer.miliSecond = 0;
             timer.second = 0;
             timer.minute = 0;
-            timer.hour = 0;
+            // timer.hour = 0;
             return timer;
         });
     }
-
+    export let runTimeGap: any;
     function incrementTime() {
         if (!timeRun) return;
 
         countDown.update((timer) => {
-            timer.miliSecond++;
-
-            if (timer.miliSecond >= 100) {
-                timer.miliSecond = 0;
-                timer.second++;
-            }
+            timer.second++;
 
             if (timer.second >= 60) {
                 timer.second = 0;
                 timer.minute++;
             }
 
-            if (timer.minute >= 60) {
-                timer.minute = 0;
-                timer.hour++;
-            }
+            // if (timer.minute >= 60) {
+            //     timer.minute = 0;
+            //     timer.hour++;
+            // }
 
             return timer;
         });
-
-        setTimeout(incrementTime, 8);
     }
 
-    
     // -----FREEZE / UNFREEZE THE CARDS ------
 
     const freezeCards = () => {
         // debugger;
-        Object.keys(cards).forEach(key => {
+        Object.keys(cards).forEach((key) => {
             cards[key].freeze = true;
         });
     };
 
     const unfreezeCards = () => {
         // debugger;
-        Object.keys(cards).forEach(key => {
+        Object.keys(cards).forEach((key) => {
             cards[key].freeze = false;
         });
-    }
+    };
 
-
-    // MAIN LOGIC TO FLIP CARD AND FIND MATCH 
+    // MAIN LOGIC TO FLIP CARD AND FIND MATCH
 
     let matches: number[] = [];
     let flip = 0;
@@ -209,15 +201,12 @@
         let allMatched = Object.values(cards).every(
             (card: any) => card.isMatched,
         );
-        // Object.values(cards).forEach((card) => {
-        //     if (!card.isMatched) {
-        //         allMatched = false;
-        //     }
-        // });
 
         if (allMatched) {
             stopTimer();
+            gameComplete = true;
         }
+        console.log(gameComplete);
     };
     onDestroy(() => {
         unsubscribe();
@@ -227,21 +216,20 @@
 <div class="main">
     <div class="time">
         <p>
-            {$countDown.hour}:{$countDown.minute}:{$countDown.second}:{$countDown.miliSecond}
+            {#if $countDown.minute < 10}
+                0{$countDown.minute}:
+            {:else}
+                {$countDown.minute}:
+            {/if}
+            {#if $countDown.second < 10}
+                0{$countDown.second}
+            {:else}
+                {$countDown.second}
+            {/if}
         </p>
     </div>
     <div
-        class="container"
-        style="grid-template-columns: {$level === 1
-            ? 'repeat(4, 1fr)'
-            : $level === 2
-              ? 'repeat(6, 1fr)'
-              : 'repeat(8, 1fr)'}; 
-          grid-template-rows:{$level === 1
-            ? 'repeat(4, 1fr)'
-            : $level === 2
-              ? 'repeat(6, 1fr)'
-              : 'repeat(8, 1fr)'};"
+        class={`container ${$level === 1 ? "easyGrid" : $level === 2 ? "normGrid" : "hardGrid"}`}
     >
         {#each Array(Math.floor($rows * $cols)) as _, index}
             <button
@@ -269,14 +257,15 @@
         <button
             on:click={() => {
                 toggleButton();
-            }}>{isPaused?'Play':'Pause'}</button
+            }}
+            disabled={gameComplete ? true : false}
+            >{isPaused ? "Play" : "Pause"}</button
         >
     </div>
 </div>
 
 <style>
     .main {
-        background-color: gray;
         height: 100vh;
         width: 100vw;
         display: flex;
@@ -286,13 +275,34 @@
     }
 
     .container {
-        display: grid;
-        height: fit-content;
-        width: fit-content;
         background-color: skyblue;
         gap: 5px;
         border: 1px solid black;
         padding: 5px;
+    }
+
+    .easyGrid {
+        display: grid;
+        height: auto;
+        width: auto;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+
+    .normGrid {
+        display: grid;
+        height: auto;
+        width: auto;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+
+    .hardGrid {
+        display: grid;
+        height: auto;
+        width: auto;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8, 1fr);
     }
 
     .time {
@@ -304,8 +314,8 @@
     .card {
         user-select: none;
         cursor: pointer;
-        height: 80px;
-        width: 70px;
+        max-height: 80px;
+        max-width: 70px;
         display: flex;
         justify-content: center;
         align-items: center;
