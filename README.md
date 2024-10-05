@@ -7,11 +7,11 @@ $ npm run build
 $ npm run preview
 
 Images of Game UI
-![Image 1](https://github.com/Avikamboj/FlipCards/Screenshot%202024-10-055%20133554.png)
-![Image 2](https://github.com/Avikamboj/FlipCards/Screenshot%202024-10-05%20133954.png)
-![Image 3](https://github.com/Avikamboj/FlipCards/Screenshot%202024-10-05%20134008.png)
-![Image 4](https://github.com/Avikamboj/FlipCards/Screenshot%202024-10-05%20134144.png)
-![Image 5](https://github.com/Avikamboj/FlipCards/Screenshot%202024-10-05%20134158.png)
+![Image 1](Screenshot%202024-10-055%20133554.png)
+![Image 2](Screenshot%202024-10-05%20133954.png)
+![Image 3](Screenshot%202024-10-05%20134008.png)
+![Image 4](Screenshot%202024-10-05%20134144.png)
+![Image 5](Screenshot%202024-10-05%20134158.png)
 
 # create-svelte
 
