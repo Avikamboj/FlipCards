@@ -6,6 +6,13 @@ Or if you want to run production version then run commands:-
 $ npm run build
 $ npm run preview
 
+Images of Game UI
+![Image 1](https://github.com/Avikamboj/FlipCards/Screenshot 2024-10-05 133554.png)
+![Image 2](https://github.com/Avikamboj/FlipCards/Screenshot 2024-10-05 133954.png)
+![Image 3](https://github.com/Avikamboj/FlipCards/Screenshot 2024-10-05 134008.png)
+![Image 4](https://github.com/Avikamboj/FlipCards/Screenshot 2024-10-05 134144.png)
+![Image 5](https://github.com/Avikamboj/FlipCards/Screenshot 2024-10-05 134158.png)
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
