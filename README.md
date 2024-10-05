@@ -6,8 +6,8 @@ Or if you want to run production version then run commands:-
 $ npm run build
 $ npm run preview
 
-Images of Game UI
-![Image 1](Screenshot%202024-10-055%20133554.png)
+Images of Game UI <br>
+![Image 1](Screenshot%202024-10-05%20133554.png)
 ![Image 2](Screenshot%202024-10-05%20133954.png)
 ![Image 3](Screenshot%202024-10-05%20134008.png)
 ![Image 4](Screenshot%202024-10-05%20134144.png)
