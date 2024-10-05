@@ -7,6 +7,7 @@
     let playGame: Boolean;
     let unsubscribe = play.subscribe((val) => {
         playGame = val;
+        return val;
     });
 
     onDestroy(unsubscribe);

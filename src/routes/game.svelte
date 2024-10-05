@@ -3,9 +3,9 @@
     import { rows, cols, level, play, countDown } from "./store";
     import Front from "./CardFront.jpg";
     import Front2 from "./CardFront2.jpg";
+    import Page from "./+page.svelte";
 
     let values: number[] = [];
-
     let cards: any = {};
 
     let rep = 1;
@@ -18,7 +18,12 @@
     }
 
     for (let i = 0; i < $rows * $cols; i++) {
-        cards[i] = { isFlipped: false, isMatched: false, value: 0 };
+        cards[i] = {
+            isFlipped: false,
+            isMatched: false,
+            value: 0,
+            freeze: false,
+        };
     }
 
     let arr = [...values];
@@ -42,18 +47,37 @@
                 cards[i].isFlipped = false;
             }
         }, 800);
+
+        setTimeout(() => {
+            runTimer();
+        }, 1500);
     });
 
-    let timeRun = false;
+    let isPaused: boolean = false;
 
+    let timeRun = false;
     let unsubscribe = countDown.subscribe((val) => {
         timeRun = val.isRunning;
     });
 
-    if (timeRun) {
-        setTimeout(() => {
-            incrementTime();
-        }, 1500);
+    const toggleButton = () => {
+        if (!isPaused) {
+            stopTimer();
+            freezeCards();
+        } else {
+            runTimer();
+            unfreezeCards();
+        }
+        isPaused = !isPaused;
+    };
+
+    function runTimer() {
+        timeRun = true;
+        countDown.update((timer) => {
+            timer.isRunning = true;
+            return timer;
+        });
+        incrementTime();
     }
 
     function stopTimer() {
@@ -102,10 +126,31 @@
         setTimeout(incrementTime, 8);
     }
 
+    
+    // -----FREEZE / UNFREEZE THE CARDS ------
+
+    const freezeCards = () => {
+        // debugger;
+        Object.keys(cards).forEach(key => {
+            cards[key].freeze = true;
+        });
+    };
+
+    const unfreezeCards = () => {
+        // debugger;
+        Object.keys(cards).forEach(key => {
+            cards[key].freeze = false;
+        });
+    }
+
+
+    // MAIN LOGIC TO FLIP CARD AND FIND MATCH 
+
     let matches: number[] = [];
     let flip = 0;
     function flipCard(index: number) {
-        if (cards[index].isMatched) return;
+        // debugger;
+        if (cards[index].isMatched || cards[index].freeze) return;
 
         cards[index].isFlipped = !cards[index].isFlipped;
 
@@ -161,7 +206,9 @@
         matches = [];
         flip = 0;
 
-        let allMatched = Object.values(cards).every((card) => card.isMatched);
+        let allMatched = Object.values(cards).every(
+            (card: any) => card.isMatched,
+        );
         // Object.values(cards).forEach((card) => {
         //     if (!card.isMatched) {
         //         allMatched = false;
@@ -172,7 +219,9 @@
             stopTimer();
         }
     };
-    onDestroy(unsubscribe);
+    onDestroy(() => {
+        unsubscribe();
+    });
 </script>
 
 <div class="main">
@@ -217,6 +266,11 @@
                 play.update((val) => (val = false));
             }}>Restart</button
         >
+        <button
+            on:click={() => {
+                toggleButton();
+            }}>{isPaused?'Play':'Pause'}</button
+        >
     </div>
 </div>
 
@@ -239,6 +293,12 @@
         gap: 5px;
         border: 1px solid black;
         padding: 5px;
+    }
+
+    .time {
+        margin: 20px;
+        font-size: 2em;
+        transition: all 0.2s;
     }
 
     .card {
