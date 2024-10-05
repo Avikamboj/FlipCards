@@ -8,7 +8,6 @@ export let play = writable(false);
 export let countDown = writable({ 
     second: 0,
     minute: 0,
-    hour: 0,
-    miliSecond: 0,
+    // hour: 0,
     isRunning: false,
 });

@@ -13,8 +13,19 @@
     onDestroy(unsubscribe);
 </script>
 
-{#if playGame}
-    <Game />
-{:else}
-    <SetLayout />
-{/if}
+<main>
+    {#if playGame}
+        <Game />
+    {:else}
+        <SetLayout />
+    {/if}
+</main>
+
+<style>
+    main {
+        height: 100vh;
+        width: 100vw;
+        background: gray;
+        display: flex;
+    }
+</style>
