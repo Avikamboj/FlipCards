@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import incrementTimer from "./game.svelte";
     import { rows, cols, level, play, countDown } from "./store";
 
     let r: number;

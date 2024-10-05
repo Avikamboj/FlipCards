@@ -33,7 +33,8 @@
         cards[v].value = pickedValue;
         v++;
     }
-
+    
+    let runTimeGap: any;
     let gameComplete: boolean = false;
     onMount(() => {
         setTimeout(() => {
@@ -99,7 +100,7 @@
             return timer;
         });
     }
-    export let runTimeGap: any;
+    
     function incrementTime() {
         if (!timeRun) return;
 
