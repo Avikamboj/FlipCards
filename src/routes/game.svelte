@@ -34,6 +34,7 @@
         v++;
     }
 
+    let runTimeGap: any;
     let gameComplete: boolean = false;
     onMount(() => {
         setTimeout(() => {
@@ -50,7 +51,7 @@
 
         setTimeout(() => {
             runTimer();
-        }, 1500);
+        }, 1200);
     });
 
     let isPaused: boolean = false;
@@ -73,10 +74,6 @@
 
     function runTimer() {
         timeRun = true;
-        countDown.update((timer) => {
-            timer.isRunning = true;
-            return timer;
-        });
         runTimeGap = setInterval(incrementTime, 1000);
     }
 
@@ -99,7 +96,7 @@
             return timer;
         });
     }
-    export let runTimeGap: any;
+
     function incrementTime() {
         if (!timeRun) return;
 
@@ -266,41 +263,33 @@
 
 <style>
     .main {
-        height: 100vh;
-        width: 100vw;
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        height: 100vh;
     }
 
     .container {
-        background-color: skyblue;
-        gap: 5px;
-        border: 1px solid black;
-        padding: 5px;
+        display: grid;
+        gap: 2px;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 2px;
     }
 
     .easyGrid {
-        display: grid;
-        height: auto;
-        width: auto;
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(4, 1fr);
     }
 
     .normGrid {
-        display: grid;
-        height: auto;
-        width: auto;
         grid-template-columns: repeat(6, 1fr);
         grid-template-rows: repeat(6, 1fr);
     }
 
     .hardGrid {
-        display: grid;
-        height: auto;
-        width: auto;
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(8, 1fr);
     }
@@ -314,16 +303,45 @@
     .card {
         user-select: none;
         cursor: pointer;
+        height: calc(100vw / 4-2px);
+        width: calc(100vw / 4-2px);
         max-height: 80px;
         max-width: 70px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid black;
-        box-sizing: border-box;
+        text-align: center;
+        border: 1px solid red;
         transition: transform 0.5s;
         transform-style: preserve-3d;
     }
+
+    @media (max-width: 480px) {
+        .easyGrid .card {
+            height: calc(100vw / 4 - 2px);
+            width: calc(100vw / 4 - 2px);
+        }
+
+        .normGrid .card {
+            height: calc(100vw / 6 - 2px);
+            width: calc(100vw / 6 - 2px);
+        }
+
+        .hardGrid .card {
+            height: calc(100vw / 8 - 2px);
+            width: calc(100vw / 8 - 2px);
+        }
+    }
+
+    /* @media (max-width: 320px) {
+        .normGrid .card {
+            max-height: 55px;
+            max-width: 45px;
+        }
+
+        .hardGrid .card {
+            max-height: 35px;
+            max-width: 30px;
+            font-size: 0.8em;
+        }
+    } */
 
     .flipped {
         transform: rotateY(180deg);
