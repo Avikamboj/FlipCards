@@ -7,7 +7,7 @@ $ npm run build
 $ npm run preview
 
 Images of Game UI <br>
-<img src="Screenshot%202024-10-05%20133554.png" alt="Image 1" height="500" width="300" />
+<img src="Screenshot%202024-10-05%20133554.png" alt="Image 1" height="300" width="300" />
 <img src="Screenshot%202024-10-06%20224026.png" alt="Easy Mode" height="500" width="300"/>
 <img src="Screenshot%202024-10-06%20223542.png" alt="Match Cards" height="500" width="300"/>
 <img src="Screenshot%202024-10-06%20223523.png" alt="Medium Mode" height="500" width="300"/>
