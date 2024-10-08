@@ -168,9 +168,12 @@
             const secondCardBack = secondCard.querySelector(
                 ".card-back",
             ) as HTMLElement;
+
             setTimeout(() => {
                 firstCardBack.style.backgroundColor = "green";
                 secondCardBack.style.backgroundColor = "green";
+                firstCard.style.color = "white";
+                secondCard.style.color = "white";
             }, 500);
 
             cards[firstInd].isMatched = true;
@@ -250,8 +253,7 @@
             on:click={() => {
                 resetTimer();
                 play.update((val) => (val = false));
-            }}
-            >Restart</button
+            }}>Restart</button
         >
         <button
             on:click={() => {
@@ -279,8 +281,8 @@
     .container {
         display: grid;
         gap: 2px;
-        width: 100%;
-        max-width: 400px;
+        width: fit-content;
+        /* max-width: 400px; */
         margin: 0 auto;
         padding: 2px;
     }
