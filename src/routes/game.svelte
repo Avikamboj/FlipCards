@@ -3,6 +3,7 @@
     import { rows, cols, level, play, countDown } from "./store";
     import Front from "./CardFront.jpg";
     import Front2 from "./CardFront2.jpg";
+    import Winner from "./winner.svelte";
 
     let values: number[] = [];
     let cards: any = {};
@@ -167,9 +168,12 @@
             const secondCardBack = secondCard.querySelector(
                 ".card-back",
             ) as HTMLElement;
+
             setTimeout(() => {
                 firstCardBack.style.backgroundColor = "green";
                 secondCardBack.style.backgroundColor = "green";
+                firstCard.style.color = "white";
+                secondCard.style.color = "white";
             }, 500);
 
             cards[firstInd].isMatched = true;
@@ -261,6 +265,10 @@
     </div>
 </div>
 
+{#if gameComplete}
+    <Winner />
+{/if}
+
 <style>
     .main {
         display: flex;
@@ -273,8 +281,8 @@
     .container {
         display: grid;
         gap: 2px;
-        width: 100%;
-        max-width: 400px;
+        width: fit-content;
+        /* max-width: 400px; */
         margin: 0 auto;
         padding: 2px;
     }
