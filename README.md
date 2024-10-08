@@ -1,3 +1,18 @@
+To Run this Game First you have to install svelte (javascript framework) in your system, Then open the project folder in any editor, run command:- 
+$ npm run dev
+
+Or if you want to run production version then run commands:- 
+
+$ npm run build
+$ npm run preview
+
+Images of Game UI <br>
+<img src="Screenshot%202024-10-05%20133554.png" alt="Image 1" height="300" width="300" />
+<img src="Screenshot%202024-10-06%20224026.png" alt="Easy Mode" height="500" width="300"/>
+<img src="Screenshot%202024-10-06%20223542.png" alt="Match Cards" height="500" width="300"/>
+<img src="Screenshot%202024-10-06%20223523.png" alt="Medium Mode" height="500" width="300"/>
+<img src="Screenshot%202024-10-06%20223553.png" alt="hard Mode" height="500" width="300"/>
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
