@@ -3,6 +3,7 @@
     import { rows, cols, level, play, countDown } from "./store";
     import Front from "./CardFront.jpg";
     import Front2 from "./CardFront2.jpg";
+    import Winner from "./winner.svelte";
 
     let values: number[] = [];
     let cards: any = {};
@@ -249,7 +250,8 @@
             on:click={() => {
                 resetTimer();
                 play.update((val) => (val = false));
-            }}>Restart</button
+            }}
+            >Restart</button
         >
         <button
             on:click={() => {
@@ -260,6 +262,10 @@
         >
     </div>
 </div>
+
+{#if gameComplete}
+    <Winner />
+{/if}
 
 <style>
     .main {
